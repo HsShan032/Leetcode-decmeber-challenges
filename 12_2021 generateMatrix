@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> mat;
+        vector<int> temp;
+        int matrix[n][n];
+        for(int i=1;i<=(n*n);i++)
+            temp.push_back(i);
+        /*for(int i=0;i<n*n;i++)
+            cout<<temp[i]<<" ";
+        cout<<"\n";*/
+        int dir=0,top=0,left=0,bottom=n-1,right=n-1,cntr=0;
+        while(top<=bottom && left<=bottom){
+            if(dir==0){
+                for(int i = left;i<=right;i++)
+                    matrix[top][i] = temp[cntr++];
+                top++;
+            }
+            if(dir==1){
+                for(int i=top;i<=bottom;i++)
+                    matrix[i][right] = temp[cntr++];
+                right--;
+            }
+            if(dir==2){
+                for(int i=right;i>=left;i--)
+                    matrix[bottom][i] = temp[cntr++];
+                bottom--;
+            }
+            if(dir==3){
+                for(int i=bottom;i>=top;i--)
+                    matrix[i][left] = temp[cntr++];
+                left++;
+            }
+            dir = (dir+1)%4;
+        }
+        /*for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                cout<<matrix[i][j]<<" ";
+            }cout<<"\n";
+        }*/
+        temp.clear();
+        for(int i=0;i<=n-1;i++){
+            for(int j=0;j<=n-1;j++){
+                temp.push_back(matrix[i][j]);
+            }
+            mat.push_back(temp);
+            temp.clear();
+        }
+        return mat;
+    }
+};
