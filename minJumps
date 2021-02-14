@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minJumps(vector<int>& arr) {
+        map<int,vector<int>> m;
+        int n = arr.size();
+        for(int i=0;i<n;i++)
+            m[arr[i]].push_back(i);
+        queue<int> q;
+        set<int> s;
+        q.push(0);
+        s.insert(0);
+        int steps = 0;
+        while(!q.empty()){
+            int size = q.size();
+            while(size-- > 0){
+                int i = q.front();
+                q.pop();
+                if(i == n-1)
+                    return steps;
+                vector<int> adj = m[arr[i]];
+                adj.push_back(i-1);
+                adj.push_back(i+1);
+                for(int j:adj){
+                    if(j>=0 && j<n && s.find(j)==s.end())
+                    {
+                        q.push(j);
+                        s.insert(j);
+                    }
+                }
+                adj.clear();
+            }steps++;
+        }
+        return -1;
+    }
+};
