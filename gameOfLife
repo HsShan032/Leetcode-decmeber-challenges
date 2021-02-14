@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isSafe(int x,int y,int R,int C){
+        return (x>=0 && x<R && y>=0 && y<C);
+            
+    }
+    void gameOfLife(vector<vector<int>>& board) {
+        int r = board.size();
+        int c = board[0].size();
+        int spare[r][c];
+        for(int i=0;i<r;i++)
+            for(int j=0;j<c;j++)
+                spare[i][j] = board[i][j];
+        vector<int> dx = {1,1,0,-1,-1,-1,0,1};
+        vector<int> dy = {0,1,1,1,0,-1,-1,-1,1};
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                int live = 0;
+                for(int k=0;k<8;k++)
+                    if(isSafe(i+dx[k],j+dy[k],r,c) && spare[i+dx[k]][j+dy[k]]==1)
+                        live++;
+                    if(spare[i][j] == 0 && live == 3)
+                        board[i][j] = 1;
+                    if(board[i][j] == 1 && (live < 2 || live > 3))
+                        board[i][j] = 0;
+                
+            }
+        }
+    }
+};
