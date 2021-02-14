@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        int count=0,l = flowerbed.size();
+        int x[flowerbed.size() + 2];
+        memset(x,0,sizeof(x));
+        for(int i=0;i<flowerbed.size();i++)
+            x[i+1] = flowerbed[i];
+        for(int i=1;i<=l;i++){
+            if(x[i] == 0 && x[i-1] == 0 && x[i+1] == 0)
+            {count++;
+                x[i] = 1;}
+        }
+        return count >= n;
+    }
+};
